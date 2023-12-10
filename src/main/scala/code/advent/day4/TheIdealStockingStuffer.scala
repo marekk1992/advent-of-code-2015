@@ -20,7 +20,6 @@ object TheIdealStockingStuffer extends App {
     val hexBytes = MessageDigest.getInstance("MD5").digest(input.getBytes)
     val hexString = hexBytes.map("%02x".format(_)).mkString
 
-    hexString.take(5) == "00000"
+    hexString.take(6) == "000000"
   }
-
 }
