@@ -5,24 +5,33 @@ import scala.io.Source
 
 object PerfectlySphericalHousesInVacuum extends App {
 
-  val NORTH = '^'
-  val SOUTH = 'v'
-  val EAST = '>'
-  val WEST = '<'
+  private val NORTH = '^'
+  private val SOUTH = 'v'
+  private val EAST = '>'
+  private val WEST = '<'
 
-  case class Coordinate(x: Int, y: Int)
+  private case class Coordinate(x: Int, y: Int)
 
   private val bufferedSource = Source.fromFile("src/main/resources/inputs/adventofcode.com_2015_day_3_input.txt")
 
   val input: List[Char] = bufferedSource.getLines().flatten.toList
-  val coordinatesMap = findAllVisitedLocations(input, Coordinate(0, 0), Set(Coordinate(0, 0)))
-  val result = coordinatesMap.size
+  val result = findAllVisitedHouses(input)
   println(result)
 
   bufferedSource.close()
 
+  private def findAllVisitedHouses(input: List[Char]): Int = {
+    val santaLocations = input.zipWithIndex.filter( {case (_, index) => index % 2 == 0} ).map(_._1)
+    val roboSantaLocations = input.zipWithIndex.filter( {case (_, index) => index % 2 != 0} ).map(_._1)
+
+    val uniqueVisitedHouses = visitHouses(santaLocations, Coordinate(0, 0), Set(Coordinate(0, 0)))
+      .union(visitHouses(roboSantaLocations, Coordinate(0, 0), Set(Coordinate(0, 0))))
+
+    uniqueVisitedHouses.size
+  }
+
   @tailrec
-  private def findAllVisitedLocations(input: List[Char], lastCoordinate: Coordinate, coordinates: Set[Coordinate]): Set[Coordinate] = {
+  private def visitHouses(input: List[Char], lastCoordinate: Coordinate, coordinates: Set[Coordinate]): Set[Coordinate] = {
     if (input.isEmpty) coordinates
     else {
       val currentCoordinate = input.head match {
@@ -31,7 +40,7 @@ object PerfectlySphericalHousesInVacuum extends App {
         case EAST => Coordinate(lastCoordinate.x + 1, lastCoordinate.y)
         case WEST => Coordinate(lastCoordinate.x - 1, lastCoordinate.y)
       }
-      findAllVisitedLocations(input.drop(1), currentCoordinate, coordinates + currentCoordinate)
+      visitHouses(input.drop(1), currentCoordinate, coordinates + currentCoordinate)
     }
   }
 }
