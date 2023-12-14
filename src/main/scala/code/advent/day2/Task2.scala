@@ -2,7 +2,7 @@ package code.advent.day2
 
 import scala.io.Source
 
-object IWasToldThereWouldBeNoMath extends App {
+object Task2 extends App {
 
   private val bufferedSource = Source.fromFile("src/main/resources/inputs/adventofcode.com_2015_day_2_input.txt")
 
