@@ -3,7 +3,7 @@ package code.advent.day1
 import scala.annotation.tailrec
 import scala.io.Source
 
-object NotQuiteLisp extends App {
+object Task1 extends App {
 
   private val bufferedSource = Source.fromFile("src/main/resources/inputs/adventofcode.com_2015_day_1_input.txt")
   private val input = bufferedSource.getLines().mkString.zipWithIndex.map( { case (char, index) => index + 1 -> char }).toList

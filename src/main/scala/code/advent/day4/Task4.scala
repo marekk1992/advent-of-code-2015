@@ -3,7 +3,7 @@ package code.advent.day4
 import java.security.MessageDigest
 import scala.annotation.tailrec
 
-object TheIdealStockingStuffer extends App {
+object Task4 extends App {
 
   val INPUT = "iwrupvqb"
 

@@ -3,7 +3,7 @@ package code.advent.day3
 import scala.annotation.tailrec
 import scala.io.Source
 
-object PerfectlySphericalHousesInVacuum extends App {
+object Task3 extends App {
 
   private val NORTH = '^'
   private val SOUTH = 'v'
