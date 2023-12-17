@@ -5,7 +5,7 @@ import scala.io.Source
 object Task6 extends App {
 
   private val bufferedSource = Source.fromFile("src/main/resources/inputs/adventofcode.com_2015_day_6_input.txt")
-  val grid: Array[Array[String]] = Array.ofDim[String](1000, 1000).map(_ => Array.fill(1000)("OFF"))
+  private val grid: Array[Array[Int]] = Array.ofDim[Int](1000, 1000).map(_ => Array.fill(1000)(0))
 
   for {
     line <- bufferedSource.getLines()
@@ -21,22 +21,19 @@ object Task6 extends App {
       case "turn on" => for {
         row <- rowRange
         column <- columnRange
-      } grid(row)(column) = "ON"
+      } grid(row)(column) = grid(row)(column) + 1
       case "turn off" => for {
         row <- rowRange
         column <- columnRange
-      } grid(row)(column) = "OFF"
+      } grid(row)(column) = if (grid(row)(column) == 0) 0 else grid(row)(column) - 1
       case "toggle" => for {
         row <- rowRange
         column <- columnRange
-      } grid(row)(column) match {
-        case "ON" => grid(row)(column) = "OFF"
-        case "OFF" => grid(row)(column) = "ON"
-      }
+      } grid(row)(column) = grid(row)(column) + 2
     }
   }
 
-  val result = grid.flatten.count(_.equals("ON"))
+  val result = grid.flatten.sum
 
   println(result)
 }
