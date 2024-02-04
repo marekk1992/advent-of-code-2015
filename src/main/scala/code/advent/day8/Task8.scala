@@ -8,18 +8,17 @@ object Task8 extends App {
 
   val result = (for {
     line <- bufferedSource.getLines()
-    stringLength = line.length
-    charactersInMemory = resolveLine(line)
-  } yield stringLength - charactersInMemory).sum
+    increasedStringLength = getIncreasedStringLength(line)
+  } yield increasedStringLength - line.length).sum
 
   println(result)
 
-  private def resolveLine(input: String): Int = {
-    input
-      .substring(1, input.length - 1)
-      .replaceAll("\\\\\"", "1")
-      .replaceAll("\\\\x([a-fA-F0-9]{2})", "1")
-      .replaceAll("\\\\\\\\", "1")
+  private def getIncreasedStringLength(input: String): Int = {
+    val withStringBeginningResolved = input.headOption.map(_ => 111 + input.tail).get
+    val withStringEndResolved = withStringBeginningResolved.init + 111
+    withStringEndResolved
+      .replaceAll("\\\\\"", "1111")
+      .replaceAll("\\\\", "11")
       .length
   }
 }
